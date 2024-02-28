@@ -1,0 +1,14 @@
+*{
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+}
+
+input{
+    border-radius: 8px;
+    border: 1.3px solid black;
+}
+body{
+    font-weight: bolder;
+   
+    background-image: url("background.png");
+}

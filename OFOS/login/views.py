@@ -1,12 +1,30 @@
 from django.shortcuts import render,redirect
 from .forms import Registration
+from login.models import Product,CustomeUser
 from django.contrib import messages
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.forms import AuthenticationForm
+from math import ceil
 
-# Create your views here.
+def landing(request):
+    return render(request,'index.html')
+
 def home(request):
-    return render(request,'home.html')
+    restaurants = CustomeUser.objects.filter(usertype='restaurant')
+    
+    context = {
+        'restaurants' : restaurants,
+    }
+    return render(request,'home.html',context)
+
+def rest_prod(request,id):
+    objects = Product.objects.filter(user=id)
+    context = {
+        'products' : objects,
+        'id': id,
+    }
+    return render(request,'rest_prod.html',context)
+
 
 def register(request):
     if request.method == "POST":
@@ -19,6 +37,12 @@ def register(request):
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = Registration()
     return render(request,'register.html',{'register_form' : form})
+
+def logout_req(request):
+    logout(request)
+    messages.info(request,"You have successfully loged out!")
+    return redirect("login:landing")
+
 
 def login_request(request):
     if request.method == "POST":
@@ -37,3 +61,13 @@ def login_request(request):
             messages.error(request,"Invalid username or password.")
     form = AuthenticationForm()
     return render(request=request, template_name="login.html", context={"login_form":form})
+
+
+def search(request):
+    key = request.POST['search']
+    restaurants = CustomeUser.objects.filter(username=key)
+    context = {
+        'restaurants' : restaurants,
+    }
+    return render(request,'home.html',context)
+    

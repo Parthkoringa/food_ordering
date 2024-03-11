@@ -6,9 +6,11 @@
 input{
     border-radius: 8px;
     border: 1.3px solid black;
+    color: black;
 }
+
 body{
     font-weight: bolder;
-   
-    background-image: url("background.png");
+    
+    background-image: url("loginbackground.avif");
 }

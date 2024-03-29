@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'loginStyle.css' %}">
     <title>Register</title>
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    
 </head>
 <body>
     <h1>Register</h1>
+    
     <form method="POST" action="">
         {% csrf_token %}
         {{ register_form.as_p }}
@@ -25,5 +27,6 @@
         {% endfor %}
     </ul>
     {% endif %}
+    
 </body>
 </html>

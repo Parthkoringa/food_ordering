@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'loginStyle.css' %}">
     <title>Login</title>
     {% load bootstrap5 %}
     {% bootstrap_css %}
@@ -12,22 +12,22 @@
 </head>
 <body>
     <div class="container py-5 text-center">
-    <h1>Login</h1>
-    <br>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ login_form.as_p }}
-        <input class="btn btn-primary" type="submit" value="Login"></button>
-    </form>
-    <br><p>Don't have an account? <a href="/register">Create an
-        account</a>.</p>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+        <h1>Login</h1>
+        <br>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ login_form.as_p }}
+            <input class="btn btn-primary" type="submit" value="Login">
+        </form>
+        <br>
+        <p>Don't have an account? <a href="/register">Create an account</a>.</p>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 </body>
 </html>

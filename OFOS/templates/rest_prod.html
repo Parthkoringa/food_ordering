@@ -3,17 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
+    <title>Product Details</title>
+    {% load static%}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'product_style.css' %}">
 </head>
 <body>
-    <h1>Products</h1>
-    {% for i in products %}
+    <header>
+        <h1>Restaurant Name</h1>
+    </header>
 
-    <ul>
-        <li><h3>{{ i.p_name }}</h3></li>
-    </ul>
+    <div class="main-content">
+        <div class="container">
+            <h2>Products</h2>
+            <div class="product-list">
+                {% for product in products %}
+                <div class="product">
+                    <img src="{{ product.p_image.url }}" alt="{{ product.p_name }}">
+                    <h3>{{ product.p_name }}</h3>
+                    <p class="description">{{ product.p_description }}</p>
+                    <p class="price">Price: ${{ product.unit_price }}</p>
+                    <button class="btn-buy" onclick="addToCart('{{ product.p_name }}', {{ product.unit_price }})">Buy</button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
 
-    {% endfor %}
+        <div class="side-section">
+            <h2>Cart</h2>
+            <ul id="cart-items">
+                <!-- Selected items will be added here -->
+            </ul>
+            <a href="#" class="btn-total" onclick="calculateTotal()">Conform Order</a>
+            <p id="total-price"></p>
+        </div>
+    </div>
 
+    <script>
+        function addToCart(name, price) {
+            var cartItems = document.getElementById("cart-items");
+            var li = document.createElement("li");
+            li.textContent = name + " - $" + price;
+            cartItems.appendChild(li);
+            calculateTotal();
+        }
+        function calculateTotal() {
+            var cartItems = document.querySelectorAll("#cart-items li");
+            var totalPrice = 0;
+            cartItems.forEach(function(item) {
+                var itemPrice = parseFloat(item.textContent.split("$")[1]);
+                totalPrice += itemPrice;
+            });
+            document.getElementById("total-price").textContent = "Total: $" + totalPrice.toFixed(2);
+        }
+    </script>
 </body>
 </html>

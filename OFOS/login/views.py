@@ -9,6 +9,7 @@ from django.http import FileResponse
 from django.contrib.auth.forms import AuthenticationForm
 from reportlab.pdfgen import canvas
 from math import ceil
+
 def landing(request):
     return render(request,'index.html')
 

@@ -1,0 +1,90 @@
+
+
+
+/* style.css */
+
+body {
+    background-image: url("loginbackground.avif"); /* Replace 'background.jpg' with your background image */
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.228); /* Adjust the opacity (last value) as needed */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3); /* Add a box shadow for the blurred effect */
+    backdrop-filter: blur(1px); /* Apply blur effect */
+}
+
+form {
+    width: 300px; /* Adjust width as needed */
+    margin: 0 auto;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+h1 {
+    text-align: center;
+}
+
+
+input[type="submit"] {
+    background-color: #093b6f;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width:inherit;
+    margin-bottom: 20px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.btn-primary {
+    background-color: #1b0d9a;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+.btn-primary:hover {
+    background-color: #b21616;
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+}
+
+.messages li {
+    margin: 5px 0;
+}
+
+.messages .error {
+    color: red;
+}
+
+.messages .info {
+    color: blue;
+}
+
+.messages .success {
+    color: green;
+}

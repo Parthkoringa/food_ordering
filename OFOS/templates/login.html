@@ -19,14 +19,17 @@
             {{ login_form.as_p }}
             <input class="btn btn-primary" type="submit" value="Login">
         </form>
-        <br>
-        <p>Don't have an account? <a href="/register">Create an account</a>.</p>
+        <em><strong><a href="{% url 'login:reset_password' %}">forgot password</a></strong></em>
+        <br>    
+        <p>Don't have an account? <em><strong><a href="/register">Create an account</a></strong></em>.</p>
         {% if messages %}
-        <ul class="messages">
             {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% if message.tags == "error" %}
+                    <script>
+                        alert("{{ message }}");
+                    </script>
+                {% endif %}
             {% endfor %}
-        </ul>
         {% endif %}
     </div>
 </body>

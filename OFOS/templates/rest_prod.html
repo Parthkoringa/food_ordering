@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <h1>Restaurant Name</h1>
+        <h1>{{restname}}</h1>
     </header>
 
     <div class="main-content">
@@ -25,7 +25,7 @@
                     <h3>{{ product.p_name }}</h3>
                     <p class="description">{{ product.p_description }}</p>
                     <p class="price">Price: ${{ product.unit_price }}</p>
-                    <button class="btn-buy" onclick="addToCart('{{ product.p_name }}', {{ product.unit_price }})">Buy</button>
+                    <button class="btn-buy" onclick="addToCart('{{ product.p_name }}' , '{{ product.unit_price }}')">Buy</button>
                 </div>
                 {% endfor %}
             </div>
@@ -33,31 +33,54 @@
 
         <div class="side-section">
             <h2>Cart</h2>
-            <ul id="cart-items">
+            <form id="cart-items" action="{% url 'login:confirm_order' id %}" method="post">
                 <!-- Selected items will be added here -->
-            </ul>
-            <a href="#" class="btn-total" onclick="calculateTotal()">Conform Order</a>
-            <p id="total-price"></p>
+                {% csrf_token %}
+                <input type="text" id="total-price" name="total-price" readonly/>
+                <input type="submit" value="Confirm Order" class="btn-total" ><br><br>
+            </form>
+            
         </div>
     </div>
 
     <script>
+        var count=0, total=0;
         function addToCart(name, price) {
             var cartItems = document.getElementById("cart-items");
-            var li = document.createElement("li");
-            li.textContent = name + " - $" + price;
+            var li = document.createElement("input");
+            var button = document.createElement("button");
+            count++;
+            var str = "item"+count;
+            li.setAttribute("type","text")
+            li.setAttribute("id",str);
+            li.setAttribute("name",str);
+            
+            var str2 = "button"+count;
+            button.setAttribute("id",str2);
+            button.setAttribute("name",str2);
+            button.setAttribute("type","button");
+            button.style.color = "red";
+
             cartItems.appendChild(li);
-            calculateTotal();
+            cartItems.appendChild(button);
+            document.getElementById(str).value = name + " - $" + price;
+            document.getElementById(str).readOnly=true;
+            document.getElementById(str2).innerText = "X";
+            total = total + parseFloat(price);
+            document.getElementById("total-price").value = "Total: $" + total;
+            button.onclick = function(){
+                {
+                    var temp = document.getElementById(str).value.split("$");
+                    var val = temp[1];
+                    total = total - parseFloat(val);
+                    document.getElementById(str).remove();
+                    document.getElementById("total-price").value = "Total: $" + total;
+                    document.getElementById(str2).remove();
+                }
+            }
         }
-        function calculateTotal() {
-            var cartItems = document.querySelectorAll("#cart-items li");
-            var totalPrice = 0;
-            cartItems.forEach(function(item) {
-                var itemPrice = parseFloat(item.textContent.split("$")[1]);
-                totalPrice += itemPrice;
-            });
-            document.getElementById("total-price").textContent = "Total: $" + totalPrice.toFixed(2);
-        }
+
+
     </script>
 </body>
 </html>

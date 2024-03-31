@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    <div class="container py-5 text-left">
+    <form action="{% url 'login:download' %}" method="post" >
+        {% csrf_token %}
+        OnlinePayment <input type="radio" name="Payment" id="Payment">&nbsp;
+        CashPayment <input type="radio" name="Payment" id="Payment"><br>
+        <input type="text" name="Contact" id="Contact" placeholder="Enter your Contact"><br>
+        <input type="text" name="email" id="email" placeholder="Enter your email"><br>
+        <input type="text" name="payment" id="payment" placeholder="Enter UPI ID"><br>
+        <input type="submit" value="Pay"><br>
+    </form>
+    </div>
+    <div class="container py-5 text-right">
+    <h1>Order Details:- </h1>
+    <h3>Order Id:- {{ ordercontext }}</h3>
+    <h3>Total Amount:- {{ ordercontext.total_amt }}</h3>
+    <h3>date:- {{ ordercontext.order_date }}</h3>
+    <h3>Restaurant:- {{ ordercontext.r_id.username }}</h3>
+    <h3>Status:- {{ ordercontext.order_status }}</h3>
+
+    <h1>Order Items:- </h1>
+    {% for i in orderitemcontext %}
+    <ul>
+        <li><h3>item:- {{ i.p_id.p_name }} -- {{ i.price }}</h3></li>
+    </ul>
+    {% endfor %}
+    </div>
+</body>
+</html>

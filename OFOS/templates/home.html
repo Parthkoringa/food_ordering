@@ -32,8 +32,8 @@
             <ul>
               <li><a class="nav-link scrollto active" href="#">Home</a></li>
               <li><a class="nav-link scrollto" href="#about">About</a></li>
-              <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
               <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+              <li><a class="nav-link scrollto " href="{% url 'login:profile' request.user.id %}">Profile</a></li>
               {% if not request.user.is_authenticated %}
               <li><a class="nav-link" href="login">Login</a></li>
               {% else %}
@@ -69,14 +69,8 @@
 
     {% endfor %}
     {% endif %}
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
+    
+    
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

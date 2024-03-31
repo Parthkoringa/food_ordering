@@ -26,15 +26,23 @@ class Order(models.Model):
     o_id = models.AutoField
     order_date = models.DateTimeField()
     r_id = models.ForeignKey(CustomeUser, on_delete=models.CASCADE)
-    p_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
     total_amt = models.IntegerField()
-    order_status = models.CharField(max_length=3)
+    order_status = models.CharField(max_length=20,default="Confirmed")
+    def __str__(self):
+        return "order" + (str)(self.id)
+        
+class Order_items(models.Model):
+    order_item_id = models.AutoField
+    o_id = models.ForeignKey(Order, on_delete=models.CASCADE)
+    p_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.FloatField(null=False)
+    quantity = models.IntegerField(null=False)
     
     def __str__(self):
-        return "order" 
-        
-        
+        return "item"+(str) (self.id)+" "+(str)(self.o_id)
+
+    
+    
 # class Bill(models.Model):
 #     o_id = models.ForeignKey(Order, on_delete = models.CASCADE)
 #     p_id = models.ForeignKey(Product, on_delete = models.CASCADE)

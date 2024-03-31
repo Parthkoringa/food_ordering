@@ -96,7 +96,7 @@ def reset(request):
 
 ordercontext = 0
 orderitemcontext = 0
-        
+billcontext = 0
 def confirm_order(request,id):
     neworder = Order()
     neworder.order_date = now()
@@ -136,28 +136,50 @@ def confirm_order(request,id):
     }
     return render(request,'payment.html',context)
     
+def bill(request):
+    contact = request.POST['contact']
+    email = request.POST['email']
+    global ordercontext,orderitemcontext,billcontext
+    billcontext={
+        "ordercontext": ordercontext,
+        "orderitemcontext": orderitemcontext,
+        "contact": contact,
+        "email": email
+    }
+    return render(request,'bill.html',billcontext)
+
+
 def download(request):
         response = FileResponse(generate_pdf_file(request),as_attachment=True,filename="Order_bill.pdf")
-        return redirect("login:home")
+        return response
         
 def generate_pdf_file(request):
         from io import BytesIO
         buffer = BytesIO()
         p = canvas.Canvas(buffer)
-        global ordercontext,orderitemcontext
-        var1 = ordercontext.id
+        global ordercontext,orderitemcontext,billcontext
+        var1 = ordercontext
         var2 = ordercontext.order_date
         var3 = ordercontext.total_amt
         var4 = ordercontext.order_status
+        var6 = ordercontext.r_id.username
+        var7 = ordercontext.r_id.address
+        var5 = billcontext.get("contact")
+        var8 = billcontext.get("email")
         p.drawString(50,803,f"Order Details:- ")
         p.drawString(50,773,f"Order id:- {var1}")
         p.drawString(50,753,f"Order date:- {var2}")
         p.drawString(50,733,f"Order price:- {var3}")
         p.drawString(50,713,f"Order status:- {var4}")
-        p.drawString(50,630,f"Order items:-")
+        p.drawString(50,693,f"Restaurant name:- {var6}")
+        p.drawString(50,673,f"Restaurant address:- {var7}")
+        p.drawString(50,653,f"Order status:- {var4}")
+        p.drawString(50,633,f"Customer contact:- {var5}")
+        p.drawString(50,613,f"Customer email:- {var8}")
+        p.drawString(50,530,f"Order items:-")
         for i in orderitemcontext:
             count = 1
-            var6 = 600
+            var6 = 500
             p.drawString(50,var6,f"item{count}:-  {i.p_id.p_name} -- {i.price}")
             count = count + 1
             var6 = var6 - 20

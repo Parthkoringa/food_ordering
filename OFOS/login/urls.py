@@ -14,6 +14,7 @@ urlpatterns = [
     path('reset_password/',reset_password,name='reset_password'),
     path('rest_prod/confirm_order<int:id>',confirm_order,name='confirm_order'),
     path('home/profile<int:id>',profile,name='profile'),
-    path('confirm_order/download',download, name='download'),
-    path('login/reset',reset,name='reset')
+    path('bill/download',download, name='download'),
+    path('login/reset',reset,name='reset'),
+    path('payment/bill',bill,name='bill')
 ]

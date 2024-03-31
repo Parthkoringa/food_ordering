@@ -40,15 +40,3 @@ class Order_items(models.Model):
     
     def __str__(self):
         return "item"+(str) (self.id)+" "+(str)(self.o_id)
-
-    
-    
-# class Bill(models.Model):
-#     o_id = models.ForeignKey(Order, on_delete = models.CASCADE)
-#     p_id = models.ForeignKey(Product, on_delete = models.CASCADE)
-#     qty = Order.quantity
-#     date_time = Order.order_date
-#     total_amt = Order.total_amt
-#     def __str__(self):
-#         return self.id
-    

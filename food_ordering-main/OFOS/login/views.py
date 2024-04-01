@@ -27,6 +27,7 @@ from django.contrib.auth.decorators import login_required
 def landing(request):
     return render(request,'index.html')
 
+@login_required
 def home(request):
     restaurants = CustomeUser.objects.filter(usertype='restaurant')
     
@@ -35,6 +36,7 @@ def home(request):
     }
     return render(request,'home.html',context)
 
+@login_required
 def rest_prod(request,id):
     objects = Product.objects.filter(user=id)
     restobj = CustomeUser.objects.get(id=id)
@@ -50,6 +52,7 @@ def rest_prod(request,id):
 def reset_password(request):
     return render(request,'reset_password.html')
 
+
 def register(request):
     if request.method == "POST":
         form = Registration(request.POST)
@@ -57,11 +60,13 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful." )
-            return redirect('login:home')
+            return redirect('login:login')
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = Registration()
     return render(request,'register.html',{'register_form' : form})
 
+
+@login_required
 def logout_req(request):
     logout(request)
     messages.info(request,"You have successfully loged out!")
@@ -89,6 +94,7 @@ def login_request(request):
     form = AuthenticationForm()
     return render(request=request, template_name="login.html", context={"login_form":form})
 
+@login_required
 def profile(request,id):
     user = CustomeUser.objects.get(id=id)
     context = {
@@ -97,6 +103,7 @@ def profile(request,id):
     }
     return render(request,'profile.html',context)
 
+@login_required
 def search(request):
     key = request.POST['search']
     restaurants = CustomeUser.objects.filter(username=key)
@@ -104,7 +111,8 @@ def search(request):
         'restaurants' : restaurants,
     }
     return render(request,'home.html',context)
-    
+
+
 def reset(request):
     u_name = request.POST['username']
     pwd = make_password(request.POST['password']) 
@@ -115,6 +123,7 @@ def reset(request):
 ordercontext = 0
 orderitemcontext = 0
 billcontext = 0
+@login_required
 def confirm_order(request,id):
     neworder = Order()
     neworder.order_date = now()
@@ -153,7 +162,8 @@ def confirm_order(request,id):
         'orderitemcontext': orderitemcontext
     }
     return render(request,'payment.html',context)
-    
+
+@login_required    
 def bill(request):
     contact = request.POST['contact']
     email = request.POST['email']
@@ -166,11 +176,12 @@ def bill(request):
     }
     return render(request,'bill.html',billcontext)
 
-
+@login_required
 def download(request):
         response = FileResponse(generate_pdf_file(request),as_attachment=True,filename="Order_bill.pdf")
         return response
-        
+
+
 def generate_pdf_file(request):
         from io import BytesIO
         buffer = BytesIO()

@@ -1,0 +1,98 @@
+{%extends 'base.html'%}
+
+{% block content %}
+
+<head>
+    <style>
+        /* Styling for Add Product Module */
+
+        .add-product-container {
+            width: 60%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-product-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            background-color: #3669a3;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #36c03d;
+        }
+    </style>
+</head>
+
+<div class="add-product-container">
+    <h2>Add Product</h2>
+    <form method="post" enctype= multipart/form-data>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_product_name" class="label">Product Name:</label>
+            {{ form.p_name }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_product_description" class="label">Product Description:</label>
+            {{ form.p_description }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_unit_price" class="label">Unit Price:</label>
+            {{ form.unit_price }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_product_image" class="label">Product Image:</label>
+            {{ form.p_image }}
+        </div>
+        
+        <input type="submit" class="submit-btn" value="Add Product" />
+    </form>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+</div>
+{% endblock %}

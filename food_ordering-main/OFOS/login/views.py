@@ -206,12 +206,12 @@ def generate_pdf_file(request):
         p.drawString(50,633,f"Customer contact:- {var5}")
         p.drawString(50,613,f"Customer email:- {var8}")
         p.drawString(50,530,f"Order items:-")
+        temp1 = 1
+        temp2 = 550
         for i in orderitemcontext:
-            count = 1
-            var6 = 500
-            p.drawString(50,var6,f"item{count}:-  {i.p_id.p_name} -- {i.price}")
-            count = count + 1
-            var6 = var6 - 20
+            p.drawString(50,temp2,f"item{temp1}:-  {i.p_id.p_name} -- {i.price}")
+            temp1 = temp1 + 1
+            temp2 = temp2 - 15
         # p.drawString(50,19,f"item 1:- {orderitemcontext.p_id.p_name} -- {ordercontext.price}")
         
         p.showPage()

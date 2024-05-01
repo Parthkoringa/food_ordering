@@ -77,11 +77,11 @@
         <div class="row portfolio-container">
           {% for i in restaurants %}
           <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <img src="{% static 'assets/img/portfolio/restaurant.png' %}" class="img-fluid" alt="">
+            <img src="{% static 'assets/img/portfolio/images.jpeg' %}" class="img-fluid" alt="">
             <div class="portfolio-info">
               <h4><a style="color: antiquewhite;" href="{% url 'login:rest_prod' i.id %}"><h1>{{ i.username }}</h1></a></h4>
               <p>{{ i.address }}</p>
-              <a href="{% static 'assets/img/portfolio/restaurant.png' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
+              <a href="{% static 'assets/img/portfolio/food_5hj3p3y.png' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
               <a href="{% url 'login:home' %}" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
             </div>
           </div>

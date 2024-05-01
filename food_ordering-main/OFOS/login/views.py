@@ -15,6 +15,8 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate,logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import ProductForm
+import os
+from twilio.rest import Client
 from django.contrib import messages
 from login.models import Product, Order
 from django.shortcuts import (get_object_or_404,
@@ -123,6 +125,7 @@ def reset(request):
 ordercontext = 0
 orderitemcontext = 0
 billcontext = 0
+contact = 0
 @login_required
 def confirm_order(request,id):
     neworder = Order()
@@ -165,6 +168,7 @@ def confirm_order(request,id):
 
 @login_required    
 def bill(request):
+    global contact
     contact = request.POST['contact']
     email = request.POST['email']
     global ordercontext,orderitemcontext,billcontext
@@ -207,11 +211,11 @@ def generate_pdf_file(request):
         p.drawString(50,613,f"Customer email:- {var8}")
         p.drawString(50,530,f"Order items:-")
         temp1 = 1
-        temp2 = 550
+        temp2 = 500
         for i in orderitemcontext:
             p.drawString(50,temp2,f"item{temp1}:-  {i.p_id.p_name} -- {i.price}")
             temp1 = temp1 + 1
-            temp2 = temp2 - 15
+            temp2 = temp2 - 20
         # p.drawString(50,19,f"item 1:- {orderitemcontext.p_id.p_name} -- {ordercontext.price}")
         
         p.showPage()
@@ -320,6 +324,24 @@ def remove_product(request, id):
 
 @login_required
 def complete_order(request, id):
+    global contact
+    
+ 
+    # Code for send message SMS
+    account_sid = 'AC141016e1ddea741e4e50c918c475b776'
+    auth_token = 'e95b219fdb58aa0311d0d266af85d462'
+    client = Client(account_sid, auth_token)
+    phone = "+91"+ (str)(contact)
+    print(phone)
+    message = client.messages.create(
+            body='Your Order is completed.please recieve your food from counter',
+            from_='+12512208117',
+            to=phone
+        )
+
+    print(message.sid)
+
+    
     obj = get_object_or_404(Order_items, id = id)
     #add order in complete state
     obj.delete()
